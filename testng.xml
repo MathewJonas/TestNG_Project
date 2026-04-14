@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test thread-count="5" name="SmokeTest">
+		<classes>
+			<class name="testing.AnnotationsAll" />
+			<class name="testing.Annotations2" />
+			<methods>
+				<include name="test4"/>
+			</methods>
+		
+			<class name="testing.Annotations" />
+		</classes>
+	</test> <!-- SmokeTest -->
+</suite> <!-- Suite -->
