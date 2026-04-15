@@ -5,8 +5,9 @@
     <classes>
       <class name="swaglabs_test.LoginTest">
         <methods>
+          <include name="tearDown"/>
+          <include name="setUp"/>
           <include name="LoginFailureTest"/>
-          <include name="LoginSuccessTest"/>
         </methods>
       </class> <!-- swaglabs_test.LoginTest -->
     </classes>

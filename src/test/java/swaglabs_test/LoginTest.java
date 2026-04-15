@@ -6,33 +6,42 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginTest extends BaseClass{
-	
-	
-	@Test (priority = 0)
+import swaglabs_pages.LoginPage;
+
+public class LoginTest extends BaseClass {
+
+	@Test(priority = 0)
 	public void LoginSuccessTest() {
-		
-		WebElement username = driver.findElement(By.xpath("//input[@data-test='username']"));
-		username.sendKeys("standard_user");
-		WebElement password = driver.findElement(By.xpath("//input[@name='password']"));
-		password.sendKeys("secret_sauce");
-		WebElement login = driver.findElement(By.xpath("//input[@name='login-button']"));
-		login.click();
-		
+		LoginPage lp = new LoginPage();
+		lp.loginFunction("problem_user", "secret_sauce");
+
+		WebElement productTitle = driver.findElement(By.xpath("//span[@class='title']"));
+		Assert.assertEquals(productTitle.getText(), "Products");
+
 	}
-	
-	@Test (priority = 1)
+
+	@Test(priority = 1)
 
 	public void LoginFailureTest() {
-		
-		WebElement username = driver.findElement(By.xpath("//input[@data-test='username']"));
-		username.sendKeys("standard_user");
-		WebElement password = driver.findElement(By.xpath("//input[@name='password']"));
-		password.sendKeys("secret_Jonas");
-		WebElement login = driver.findElement(By.xpath("//input[@name='login-button']"));
-		login.click();
-		
+		LoginPage lp = new LoginPage();
+		lp.loginFunction("problem_user", "secret_Jonas");
+
+		WebElement errorMsg = driver.findElement(By.xpath("//h3[@data-test='error']"));
+		Assert.assertEquals(errorMsg.getText(),
+				"Epic sadface: Username and password do not match any user in this service");
+
+	}
+
+	@Test
+	public void lockedOut() {
+		LoginPage lp = new LoginPage();
+		lp.loginFunction("locked_out_user", "secret_sauce");
+
+		WebElement locked = driver
+				.findElement(By.xpath("//*[text()='Epic sadface: Sorry, this user has been locked out.']"));
+		Assert.assertEquals(locked.getText(), "Epic sadface: Sorry, this user has been locked out.");
 	}
 }
